@@ -1,0 +1,25 @@
+.background{
+    background: var(--secondary);
+    width: 100% !important;
+    height: calc(100vh - 60px);
+}
+.box{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background: rgba(255, 255, 255, 0.774);
+    height: calc(100vh - 60px);
+    width: 80%;
+}
+
+.form{
+    position: relative;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background: #FFF;
+    height: calc(100vh - 60px);
+    width: 70%;
+    padding:100px;
+}

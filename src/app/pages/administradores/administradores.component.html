@@ -1,0 +1,206 @@
+<div class="container">
+        <div class="options">
+          <h2>Administradores</h2>
+          <div>
+            <button class="btn btn-primary" (click)="open(mod)">Agregar</button>
+          </div>
+        </div>
+        <div class="filter" >
+              <div class="form-group select">
+                      <label class="col-form-label">Buscar por</label>
+      
+                      <select class="custom-select" [(ngModel)]="cFilterProperty">
+                        <option value="name">Nombre</option>
+                        <option value="phone">Teléfono</option>
+                        <option value="user">Usuario</option>
+                      </select>
+                    </div>
+                    &nbsp;
+                    <div class="form-group searchbox">
+                          <label class="col-form-label">Buscar</label>
+                          <input type="text" class="form-control" [(ngModel)]="cSearch">
+                  </div>
+        </div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Admin. No.</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of filterList()">
+              <th scope="row">{{m.id}}</th>
+              <td>{{m.name}}</td>
+              <td>{{m.user}}</td>
+              <td>{{m.phone}}</td>
+              <td>
+              <button type="button" class="btn btn-outline-info" (click)="open(mod,m)">Editar</button>
+              &nbsp;
+              <button type="button" class="btn btn-outline-danger" (click)="openDelete(confirm,m)">Borrar</button>
+      
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <ng-template #mod let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">{{ modalReason }}</h4>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="modal.dismiss(false)"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="form">
+            <div
+              class="form-group"
+              [ngClass]="form.controls.user.invalid || form.hasError('userUsed') ? 'has-danger' : 'has-success'"
+            >
+              <label class="form-control-label">Usuario</label>
+              <input
+                type="text"
+                class="form-control"
+                [ngClass]="
+                  form.controls.user.touched
+                    ? form.controls.user.invalid || form.hasError('userUsed')
+                      ? 'is-invalid'
+                      : 'is-valid'
+                    : ''
+                "
+                formControlName="user"
+              />
+              <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+              <div class="invalid-feedback" *ngIf="form.controls.user.invalid">Usuario requerido</div>
+              <div class="invalid-feedback" *ngIf="form.controls.user.touched && form.hasError('userUsed')">Este usuario ya existe</div>
+
+            </div>
+
+            <div
+              class="form-group"
+              [ngClass]="form.controls.name.invalid ? 'has-danger' : 'has-success'"
+            >
+              <label class="form-control-label">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                [ngClass]="
+                  form.controls.name.touched
+                    ? form.controls.name.invalid
+                      ? 'is-invalid'
+                      : 'is-valid'
+                    : ''
+                "
+                formControlName="name"
+              />
+              <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+              <div class="invalid-feedback">Nombre requerido</div>
+            </div>
+      
+            <div
+              class="form-group"
+              [ngClass]="
+                form.controls.phone.invalid || form.hasError('phoneUsed')? 'has-danger' : 'has-success'
+              "
+            >
+              <label class="form-control-label">Teléfono</label>
+              <input
+                type="text"
+                class="form-control"
+                [ngClass]="
+                  form.controls.phone.touched
+                    ? form.controls.phone.invalid || form.hasError('phoneUsed')
+                      ? 'is-invalid'
+                      : 'is-valid'
+                    : ''
+                "
+                formControlName="phone"
+              />
+              <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+              <div class="invalid-feedback" *ngIf="form.controls.phone.invalid">Teléfono requerido</div>
+              <div class="invalid-feedback" *ngIf="form.controls.phone.touched && form.hasError('phoneUsed')">Este teléfono ya está en uso</div>
+
+            </div>
+
+            <div
+              class="form-group"
+              [ngClass]="form.controls.password.invalid ? 'has-danger' : 'has-success'"
+            >
+              <label class="form-control-label">Contraseña</label>
+              <input
+                type="password"
+                class="form-control"
+                [ngClass]="
+                  form.controls.password.touched
+                    ? form.controls.password.invalid
+                      ? 'is-invalid'
+                      : 'is-valid'
+                    : ''
+                "
+                formControlName="password"
+              />
+              <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+              <div class="invalid-feedback">Contraseña requerida</div>
+            </div>
+
+            <div
+              class="form-group"
+              [ngClass]="form.controls.confirmpass.touched && form.hasError('notSame') ? 'has-danger' : 'has-success'"
+            >
+              <label class="form-control-label">Confirmar contraseña</label>
+              <input
+                type="password"
+                class="form-control"
+                [ngClass]="
+                  form.controls.confirmpass.touched
+                    ? form.controls.confirmpass.invalid ||  form.hasError('notSame')
+                      ? 'is-invalid'
+                      : 'is-valid'
+                    : ''
+                "
+                formControlName="confirmpass"
+              />
+              <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+              <div class="invalid-feedback" *ngIf="form.controls.confirmpass.touched && form.hasError('notSame')">Contraseñas no coinciden</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" (click)="modal.close({response:false})">Cancelar</button>
+          <button type="button" class="btn btn-success" (click)="modal.close({response:true})" [disabled]="form.invalid">Guardar</button>
+        </div>
+      </ng-template>
+      
+      
+      <div class="alert alert-dismissible alert-success  message" [ngClass]="bMessage ? 'active': ''">
+              <strong>Mensaje: </strong>{{cMessage}}
+      </div>
+      
+      
+      <ng-template #confirm let-modal>
+              <div class="modal-header">
+                      <h4 class="modal-title">Confirmación</h4>
+                      <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p><strong>¿Estás seguro de eliminar  <span class="text-primary">este</span> administrador?</strong></p>
+                      <p>Toda la información asociada al administrador será eliminada permanentemente.
+                      <span class="text-danger">Esta operación no podrá deshacerse</span>
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary"  ngbAutofocus  (click)="modal.dismiss({response:false})">Cancel</button>
+                      <button type="button" class="btn btn-danger" (click)="modal.close({response:true})">Aceptar</button>
+                    </div>
+      </ng-template>

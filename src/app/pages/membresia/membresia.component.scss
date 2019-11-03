@@ -1,0 +1,38 @@
+.container{
+    margin-top:20px !important;
+}
+
+.options{
+    display: flex;
+    justify-content: space-between;
+}
+.options button{
+    margin: 0px 10px;
+}
+
+.message{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 100px;
+    width: 500px;
+    text-align: center;
+    bottom: 0;
+    z-index: -1;
+    right: 0;
+    opacity:0;    
+    transition: all 0.5s;
+}
+
+.message.active{
+    opacity: 1;
+    z-index: 99;
+    transition: all 0.5s;
+}
+
+.filter{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

@@ -1,0 +1,25 @@
+.options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height:150px;
+    width: 100%;
+    background: #fff;
+    border-bottom: solid 2px rgba(0, 0, 0, 0.247);
+}
+.options .button{
+    cursor: pointer;
+    display: inline-block;
+    border: solid 2px rgba(0, 0, 0, 0.247);
+    height: 120px;
+    width: 150px;
+    text-align: center;
+}
+.options .button img{
+    display: inline-block;
+    height: 60%;
+}
+.options .button.active{
+    background: var(--secondary);
+}

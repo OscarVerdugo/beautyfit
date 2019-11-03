@@ -1,0 +1,15 @@
+<div class="options">
+    <a routerLink="admin" routerLinkActive="active" class="button btn-light">Administradores
+        <img src="../../../assets//images/boss.png"/>
+    </a>
+    <a routerLink="memb" routerLinkActive="active" class="button btn-light">Membresías
+            <img src="../../../assets//images/checklist.png"/>
+
+    </a>
+    <a (click)="logout($event)" class="button btn-light">Cerrar Sesión
+            <img src="../../../assets//images/power-off.png"/>
+
+    </a>
+
+</div>
+<router-outlet></router-outlet>

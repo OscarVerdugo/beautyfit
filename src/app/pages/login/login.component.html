@@ -1,0 +1,42 @@
+<div class="background">
+  <div class="box">
+    <form class="form" [formGroup]="form">
+      <h2>Inicio de sesión</h2>
+      <div  class="form-group" [ngClass]="form.controls.user.invalid ? 'has-danger': 'has-success'">
+        <label class="form-control-label" 
+          >Usuario</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="form.controls.user.touched ? form.controls.user.invalid ? 'is-invalid': 'is-valid' : ''"
+          
+          formControlName="user"
+        />
+        <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+        <div class="invalid-feedback">Usuario requerido</div>
+      </div>
+      <div  class="form-group" [ngClass]="form.controls.pass.invalid ? 'has-danger': 'has-success'">
+            <label class="form-control-label" 
+              >Contraseña</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              [ngClass]="form.controls.pass.touched ? form.controls.pass.invalid ? 'is-invalid': 'is-valid' : ''"
+              
+              formControlName="pass"
+            />
+            <br/>
+            <div class="alert alert-danger" *ngIf="bAlert">
+                    
+                     <b class="alert-link">Usuario o constraseña </b> incorrectos
+                  </div>
+            <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+            <div class="invalid-feedback">Contraseña requerido</div>
+          </div>
+      <button class="btn btn-success" (click)="save()" [disabled]="form.invalid">Iniciar</button>
+
+    </form>
+  </div>
+</div>

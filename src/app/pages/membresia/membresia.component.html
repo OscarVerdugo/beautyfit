@@ -1,0 +1,271 @@
+<div class="container">
+  <div class="options">
+    <h2>Membresías</h2>
+    <div>
+      <button class="btn btn-primary" (click)="open(mod)">Agregar</button>
+    </div>
+  </div>
+  <div class="filter" >
+        <div class="form-group select">
+                <label class="col-form-label">Buscar por</label>
+
+                <select class="custom-select" [(ngModel)]="cFilterProperty">
+                  <option value="nombre">Nombre de cliente</option>
+                  <option value="telefono">Telefono de cliente</option>
+                  <option value="usuario">Administrador</option>
+                </select>
+              </div>
+              &nbsp;
+              <div class="form-group searchbox">
+                    <label class="col-form-label">Buscar</label>
+                    <input type="text" class="form-control" [(ngModel)]="cSearch">
+            </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">No. Memb</th>
+        <th scope="col">Nom. de Cliente</th>
+        <th scope="col">Tel. de Cliente</th>
+        <th scope="col">Fecha de Inicio</th>
+        <th scope="col">Plazo en Meses</th>
+        <th scope="col">Fecha de Final</th>
+        <th scope="col">Administrador</th>
+
+        <th scope="col">Costo</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of filterList()">
+        <th scope="row">{{m.id}}</th>
+        <td>{{m.nombre}}</td>
+        <td>{{m.telefono}}</td>
+        <td>{{m.fechainicio | date:'dd/MM/yyyy'}}</td>
+        <td>{{m.meses}}</td>
+        <td>{{m.fechafin | date:'dd/MM/yyyy'}}</td>
+        <td>{{m.usuario}}</td>
+        <td>{{m.precio | currency}}</td>
+        <td>
+        <button type="button" class="btn btn-outline-info" (click)="open(mod,m)">Editar</button>
+        &nbsp;
+        <button type="button" class="btn btn-outline-danger" (click)="openDelete(confirm,m)">Borrar</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #mod let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ modalReason }}</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss(false)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div
+        class="form-group"
+        [ngClass]="form.controls.nombre.invalid ? 'has-danger' : 'has-success'"
+      >
+        <label class="form-control-label">Nombre del cliente</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="
+            form.controls.nombre.touched
+              ? form.controls.nombre.invalid
+                ? 'is-invalid'
+                : 'is-valid'
+              : ''
+          "
+          formControlName="nombre"
+        />
+        <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+        <div class="invalid-feedback">Nombre requerido</div>
+      </div>
+
+      <div
+        class="form-group"
+        [ngClass]="
+          form.controls.telefono.invalid ? 'has-danger' : 'has-success'
+        "
+      >
+        <label class="form-control-label">Teléfono del cliente</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="
+            form.controls.telefono.touched
+              ? form.controls.telefono.invalid
+                ? 'is-invalid'
+                : 'is-valid'
+              : ''
+          "
+          formControlName="telefono"
+        />
+        <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+        <div class="invalid-feedback">Teléfono requerido</div>
+      </div>
+
+      <div
+        class="form-group"
+      >
+        <label class="form-control-label">Fecha de inicio</label>
+
+        <div class="input-group">
+          <input
+            class="form-control"
+            [ngClass]="
+              form.controls.fechainicio.touched
+                ? form.controls.fechainicio.invalid
+                  ? 'is-invalid'
+                  : 'is-valid'
+                : ''
+            "
+            placeholder="yyyy-mm-dd"
+            name="dp"
+            (ngModelChange)="onDateChange()"
+            formControlName="fechainicio"
+            ngbDatepicker
+            #dinicio="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary"
+              (click)="dinicio.toggle()"
+              type="button"
+            >
+              <img src="../../../assets//images//calendar.png" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [ngClass]="form.controls.meses.invalid ? 'has-danger' : 'has-success'"
+      >
+        <label class="form-control-label">Número de meses</label>
+        <input
+          type="number"
+          class="form-control"
+          (ngModelChange)="onDateChange()"
+          [ngClass]="
+            form.controls.meses.touched
+              ? form.controls.meses.invalid
+                ? 'is-invalid'
+                : 'is-valid'
+              : ''
+          "
+          formControlName="meses"
+        />
+        <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+        <div class="invalid-feedback">Número de meses requerido</div>
+      </div>
+
+
+      <div
+        class="form-group"
+      >
+        <label class="form-control-label">Fecha final</label>
+
+        <div class="input-group">
+          <input
+            class="form-control"
+            [ngClass]="
+              form.controls.fechafin.touched
+                ? form.controls.fechafin.invalid
+                  ? 'is-invalid'
+                  : 'is-valid'
+                : ''
+            "
+            placeholder="yyyy-mm-dd"
+            name="dp"
+            disabled
+            formControlName="fechafin"
+            ngbDatepicker
+            #dfechafin="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button
+            disabled
+              class="btn btn-secondary"
+              (click)="dfechafin.toggle()"
+              type="button"
+            >
+              <img src="../../../assets//images//calendar.png" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group"
+      [ngClass]="
+          form.controls.precio.invalid ? 'has-danger' : 'has-success'
+        "
+      >
+            <label class="control-label">Costo</label>
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="number" class="form-control"
+                    formControlName="precio"
+                    [ngClass]="
+              form.controls.precio.touched
+                ? form.controls.precio.invalid
+                  ? 'is-invalid'
+                  : 'is-valid'
+                : ''
+            "
+                >
+                <div class="input-group-append">
+                  <span class="input-group-text">.00</span>
+                </div>
+              </div>
+            </div>
+            <div class="invalid-feedback">Precio requerido</div>
+
+          </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close({response:false})">Cancelar</button>
+    <button type="button" class="btn btn-success" (click)="modal.close({response:true})" [disabled]="form.invalid">Guardar</button>
+  </div>
+</ng-template>
+
+
+<div class="alert alert-dismissible alert-success  message" [ngClass]="bMessage ? 'active': ''">
+        <strong>Mensaje: </strong>{{cMessage}}
+</div>
+
+
+<ng-template #confirm let-modal>
+        <div class="modal-header">
+                <h4 class="modal-title">Confirmación</h4>
+                <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p><strong>¿Estás seguro de eliminar  <span class="text-primary">esta</span> membresía?</strong></p>
+                <p>Toda la información asociada a la membresía será eliminada permanentemente.
+                <span class="text-danger">Esta operación no podrá deshacerse</span>
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary"  ngbAutofocus  (click)="modal.dismiss({response:false})">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="modal.close({response:true})">Aceptar</button>
+              </div>
+</ng-template>
